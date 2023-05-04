@@ -4,12 +4,16 @@ import questions from './Question';
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [score, setScore] = useState(0);
+  const [showScore, setShowScore] = useState(false);
 
   const handleAnswerClick = (answerId) => {
     setSelectedAnswer(answerId);
   };
 
   const handleNextQuestion = () => {
+    const isCorrectAnswer = selectedAnswer === currentQuestion.correctAnswer;
+    setScore((prevScore) => prevScore + (isCorrectAnswer ? 1 : 0));
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setSelectedAnswer(null);
   };
@@ -30,10 +34,15 @@ const Quiz = () => {
       </div>
       <div>
         {currentQuestionIndex > 0}
-        {currentQuestionIndex < questions.length - 1 && (
+        {currentQuestionIndex < questions.length - 1 ? (
           <button onClick={handleNextQuestion}>Next</button>
+        ) : (
+          <button onClick={() => setShowScore(true)}>Submit</button>
         )}
-      </div>
+        </div>
+        {showScore && (
+          <p>Your final score is: {score}</p>
+        )}
     </div>
   );
 };
