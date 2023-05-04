@@ -32,21 +32,20 @@ const Quiz = () => {
   return (
     <div className='container'>
       <div className='container-quiz' key={currentQuestion.index}>
-        <p>Question {currentQuestionIndex + 1}: {currentQuestion.text}</p>
+        <p>Question {currentQuestionIndex + 1}/{questions.length}: <br /> <br /> {currentQuestion.text}</p>
         {currentQuestion.answers.map((answer) => (
         <button key={answer.id} onClick={() => handleAnswerClick(answer.id)} 
         className={`answerButton ${selectedAnswer === answer.id ? 'selectedAnswerButton' : ''}`}>
         {answer.text}
         </button>
         ))}
-        <p>Correct: {currentQuestion.correctAnswer}</p>
       </div>
       <div>
         {currentQuestionIndex > 0}
         {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={handleNextQuestion}>Next</button>
+          <button className='buttons' onClick={handleNextQuestion}>Next</button>
         ) : (
-          <button onClick={() => setShowScore(true)}>Submit</button>
+          <button className='buttons' onClick={() => setShowScore(true)}>Show result!</button>
         )}
       </div>
     </div>
