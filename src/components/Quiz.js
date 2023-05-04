@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import questions from './Question';
+import Result from './Results';
 
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -9,6 +10,10 @@ const Quiz = () => {
 
   const handleAnswerClick = (answerId) => {
     setSelectedAnswer(answerId);
+    const isCorrectAnswer = answerId === currentQuestion.correctAnswer;
+    if (currentQuestionIndex === questions.length - 1) {
+      setScore((prevScore) => prevScore + (isCorrectAnswer ? 1 : 0));
+    }
   };
 
   const handleNextQuestion = () => {
@@ -19,6 +24,10 @@ const Quiz = () => {
   };
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  if (showScore) {
+    return <Result score={score} questions={questions} />;
+  }
 
   return (
     <div className='container'>
@@ -39,10 +48,7 @@ const Quiz = () => {
         ) : (
           <button onClick={() => setShowScore(true)}>Submit</button>
         )}
-        </div>
-        {showScore && (
-          <p>Your final score is: {score}</p>
-        )}
+      </div>
     </div>
   );
 };
