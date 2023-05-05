@@ -47,7 +47,8 @@ const Quiz = () => {
             <button
               key={answer.id}
               onClick={() => handleAnswerClick(answer.id)}
-              className={`answerButton ${isAnswerSelected ? (isCorrect ? 'correctAnswerButton' : 'wrongAnswerButton') : ''} ${showCorrectAnswer && isCorrect ? 'correctAnswerButton' : ''}`}
+              className={`answerButton ${isAnswerSelected ? (isCorrect ? 'correctAnswerButton' 
+              : 'wrongAnswerButton') : ''} ${showCorrectAnswer && isCorrect ? 'correctAnswerButton' : ''}`}
             >
               {answer.text}
             </button>
