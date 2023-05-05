@@ -7,23 +7,29 @@ const Quiz = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [showCorrectAnswer, setShowCorrectAnswer] = useState(false);
 
   const handleAnswerClick = (answerId) => {
-    setSelectedAnswer(answerId);
-    const isCorrectAnswer = answerId === currentQuestion.correctAnswer;
-    if (currentQuestionIndex === questions.length - 1) {
-      setScore((prevScore) => prevScore + (isCorrectAnswer ? 1 : 0));
+    if (selectedAnswer === null) {
+      setSelectedAnswer(answerId);
+      const isCorrectAnswer = answerId === currentQuestion.correctAnswer;
+      if (currentQuestionIndex === questions.length - 1) {
+        setScore((prevScore) => prevScore + (isCorrectAnswer ? 1 : 0));
+      }
+      setShowCorrectAnswer(!isCorrectAnswer);
     }
-  };
+  };  
 
   const handleNextQuestion = () => {
     const isCorrectAnswer = selectedAnswer === currentQuestion.correctAnswer;
     setScore((prevScore) => prevScore + (isCorrectAnswer ? 1 : 0));
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     setSelectedAnswer(null);
+    setShowCorrectAnswer(false);
   };
 
   const currentQuestion = questions[currentQuestionIndex];
+  const isCorrectAnswer = selectedAnswer === currentQuestion.correctAnswer;
 
   if (showScore) {
     return <Result score={score} questions={questions} />;
@@ -32,13 +38,21 @@ const Quiz = () => {
   return (
     <div className='container'>
       <div className='container-quiz' key={currentQuestion.index}>
-        <p>Question {currentQuestionIndex + 1}/{questions.length}: <br /> <br /> {currentQuestion.text}</p>
-        {currentQuestion.answers.map((answer) => (
-        <button key={answer.id} onClick={() => handleAnswerClick(answer.id)} 
-        className={`answerButton ${selectedAnswer === answer.id ? 'selectedAnswerButton' : ''}`}>
-        {answer.text}
-        </button>
-        ))}
+        <p className='questionNum'>Question {currentQuestionIndex + 1}/{questions.length}:</p>
+        <p className='question'>{currentQuestion.text}</p>
+        {currentQuestion.answers.map((answer) => {
+          const isAnswerSelected = selectedAnswer === answer.id;
+          const isCorrect = answer.id === currentQuestion.correctAnswer;
+          return (
+            <button
+              key={answer.id}
+              onClick={() => handleAnswerClick(answer.id)}
+              className={`answerButton ${isAnswerSelected ? (isCorrect ? 'correctAnswerButton' : 'wrongAnswerButton') : ''} ${showCorrectAnswer && isCorrect ? 'correctAnswerButton' : ''}`}
+            >
+              {answer.text}
+            </button>
+          );
+        })}
       </div>
       <div>
         {currentQuestionIndex > 0}
