@@ -11,16 +11,16 @@
     />
     <title>React App</title>
 
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-SLW0Q3C06T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-SLW0Q3C06T');
-</script>
+  <!-- Google Analytics tracking code -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLW0Q3C06T"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SLW0Q3C06T', {
+      'page_path': '/public/index.html' // updated path to HTML file
+    });
+  </script>
 
   </head>
   <body>
