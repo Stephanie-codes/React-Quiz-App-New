@@ -1,5 +1,4 @@
 import React from 'react';
-import Quiz from './Quiz';
 
 const Result = ({ score, questions }) => {
     const handleRestart = () => {

@@ -29,7 +29,6 @@ const Quiz = () => {
   };
 
   const currentQuestion = questions[currentQuestionIndex];
-  const isCorrectAnswer = selectedAnswer === currentQuestion.correctAnswer;
 
   if (showScore) {
     return <Result score={score} questions={questions} />;
